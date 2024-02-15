@@ -16,57 +16,63 @@ class InstagramTopView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    topViewControllerVariable.initUsers();
+    topViewControllerVariable.loadUsers();
     users = topViewControllerVariable.users;
     return Container(
       padding: const EdgeInsets.only(top: 60, left: 13, right: 13),
       child: Column(
         children: [
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Instagram",
-                  style:
-                      TextStyle(fontSize: 30, fontFamily: 'Times New Roman')),
-              Row(
-                children: [
-                  Icon(Icons.favorite_border),
-                  SizedBox(width: 15),
-                  Icon(Icons.message_outlined)
-                ],
-              )
-            ],
-          ),
+          _buildTabbar(),
           const SizedBox(height: 10),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: GetBuilder<InstagramTopViewController>(
-                builder: (topViewController) {
-              return Container(
-                child: Row(children: [
-                  ...List.generate(
-                      users.length,
-                      (index) => GestureDetector(
-                          onTap: () {
-                            dep.initStoryPage();
-
-                            Get.toNamed(RouteHelper.getStoryPage(),
-                                arguments: {"userIndex": index});
-                          },
-                          child: CircleWidget(
-                            userName: users[index].userName,
-                            userProfilePicturePath:
-                                users[index].userProfilePicture,
-                            radius: 40,
-                            height: 80,
-                            width: 80,
-                          )))
-                ]),
-              );
-            }),
-          ),
+          _buildUserList(),
         ],
       ),
+    );
+  }
+
+  Widget _buildUserList() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: GetBuilder<InstagramTopViewController>(
+        builder: (topViewController) {
+          return Row(
+            children: List.generate(
+              users.length,
+              (index) => GestureDetector(
+                onTap: () {
+                  dep.initStoryPage();
+                  Get.toNamed(RouteHelper.getStoryPage(),
+                      arguments: {"userIndex": index});
+                },
+                child: CircleWidget(
+                  userName: users[index].userName,
+                  userProfilePicturePath: users[index].userProfilePicture,
+                  radius: 40,
+                  height: 80,
+                  width: 80,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildTabbar() {
+    return const Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text("Instagram",
+            style: TextStyle(fontSize: 30, fontFamily: 'Times New Roman')),
+        Row(
+          children: [
+            Icon(Icons.favorite_border),
+            SizedBox(width: 15),
+            Icon(Icons.message_outlined)
+          ],
+        )
+      ],
     );
   }
 }

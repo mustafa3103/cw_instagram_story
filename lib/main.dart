@@ -12,12 +12,15 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // -> Yapılacaklar
+  // -> 1) Daha düzgün videolu assetler koy
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: RouteHelper.getInitial(),
+      initialRoute: RouteHelper.initial,
       getPages: RouteHelper.routes,
     );
   }

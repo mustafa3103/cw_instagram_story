@@ -2,10 +2,10 @@ import 'package:codeway_case_study/widgets/video_player_widget.dart';
 import 'package:flutter/material.dart';
 
 class InstagramMainPageFeedWidget extends StatelessWidget {
-  final userName;
-  final pictureName;
-  final profilePicture;
-  final isVideo;
+  final String userName;
+  final String pictureName;
+  final String profilePicture;
+  final bool isVideo;
   const InstagramMainPageFeedWidget(
       {super.key,
       required this.userName,

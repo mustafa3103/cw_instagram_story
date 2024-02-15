@@ -1,5 +1,4 @@
 import 'package:codeway_case_study/data/repository/instagram_top_view_repo.dart';
-import 'package:codeway_case_study/models/mock_user_data.dart';
 import 'package:codeway_case_study/models/user_model.dart';
 import 'package:get/get.dart';
 
@@ -10,8 +9,15 @@ class InstagramTopViewController extends GetxController {
 
   var users = <UserModel>[];
 
+  @override
+  void onInit() {
+    super.onInit();
+    loadUsers();
+  }
+
   // Method to initialize users
-  void initUsers() {
-    users = MockUserData().users();
+  void loadUsers() {
+    instagramTopViewRepo.loadUsers();
+    users = instagramTopViewRepo.users;
   }
 }

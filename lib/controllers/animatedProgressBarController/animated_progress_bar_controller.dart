@@ -13,35 +13,45 @@ class AnimatedProgressBarController extends GetxController
   var progressIndex = 0.obs;
   var isIncrementStoryIndex = false.obs;
   var isDecrementStoryIndex = false.obs;
-  var duration = 1.obs;
+  int duration;
 
   @override
   void onInit() {
     super.onInit();
     controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: duration.toInt()),
+      duration: Duration(seconds: duration),
     );
 
     animation = Tween(begin: 0.0, end: 1.0).animate(controller);
 
     controller.addListener(() {
       if (controller.isCompleted) {
-        duration = 1.obs;
         if (storyIndex.value < progressIndex.value - 1) {
           storyIndex.value++;
+
+          updateDuration(duration);
           restartProgress();
           forwardProgress();
         } else if (storyIndex.value == progressIndex.value - 1) {
           onCompletionCallback?.call();
+          storyIndex = 0.obs;
+          restartProgress();
+          forwardProgress();
         }
       } else if (controller.isAnimating) {
         if (isIncrementStoryIndex.isTrue) {
           if (storyIndex.value < progressIndex.value - 1) {
             storyIndex.value++;
+
             restartProgress();
             forwardProgress();
             update();
+          } else if (storyIndex.value == progressIndex.value - 1) {
+            onCompletionCallback?.call();
+            storyIndex = 0.obs;
+            restartProgress();
+            forwardProgress();
           }
         }
 
@@ -87,12 +97,16 @@ class AnimatedProgressBarController extends GetxController
 
   void updateDuration(int newDuration) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (newDuration != duration.value) {
-        duration.value = newDuration;
+      if (newDuration != duration) {
+        duration = newDuration;
         controller.duration = Duration(seconds: newDuration);
         restartProgress();
         forwardProgress();
+        return;
       }
+      duration = 5;
+
+      update();
     });
   }
 

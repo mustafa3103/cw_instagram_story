@@ -3,6 +3,7 @@ import 'package:codeway_case_study/widgets/instagram_main_page_feed_widget.dart'
 import 'package:flutter/material.dart';
 
 class InstagramMainPageFeedView extends StatelessWidget {
+  // -> Variables
   final UserModel userModel;
 
   const InstagramMainPageFeedView({super.key, required this.userModel});

@@ -1,5 +1,5 @@
 import 'package:codeway_case_study/pages/instagram_main_page/instagram_main_page_view.dart';
-import 'package:codeway_case_study/pages/instagram_story_page/instagram_story_page_view.dart';
+import 'package:codeway_case_study/pages/instagram_story_page/instagram_story_page.dart';
 import 'package:get/route_manager.dart';
 
 class RouteHelper {
@@ -10,10 +10,13 @@ class RouteHelper {
   static String getStoryPage() => storyPage;
 
   static List<GetPage> routes = [
-    GetPage(name: initial, page: () => InstagramMainPageView()),
+    GetPage(
+        name: initial,
+        page: () => InstagramMainPageView(),
+        transition: Transition.zoom),
     GetPage(
         name: storyPage,
         page: () => InstagramStoryPage(),
-        transition: Transition.circularReveal)
+        transition: Transition.zoom)
   ];
 }

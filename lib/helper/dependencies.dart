@@ -4,8 +4,8 @@ import 'package:codeway_case_study/controllers/instagram_main_page_controllers/i
 import 'package:codeway_case_study/controllers/instagram_story_page_controllers/instagram_story_page_controller.dart';
 import 'package:codeway_case_study/data/repository/instagram_main_page_feed_repo.dart';
 import 'package:codeway_case_study/data/repository/instagram_main_page_repo.dart';
-import 'package:codeway_case_study/data/repository/instagram_story_page_repo.dart';
 import 'package:codeway_case_study/data/repository/instagram_top_view_repo.dart';
+import 'package:codeway_case_study/data/repository/instagram_story_page_repo.dart';
 import 'package:get/get.dart';
 
 Future<void> init() async {
@@ -27,7 +27,7 @@ Future<void> initStoryPage() async {
   // -> Repo of story page
   Get.lazyPut(() => InstagramStoryPageRepo());
 
-  // -> Controller of story page
-  Get.lazyPut(() =>
-      InstagramStoryPageViewController(instagramStoryPageRepo: Get.find()));
+  // Controller of story page
+  Get.lazyPut(
+      () => InstagramStoryPageController(instagramStoryPageRepo: Get.find()));
 }

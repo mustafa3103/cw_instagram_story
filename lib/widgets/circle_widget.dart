@@ -30,7 +30,6 @@ class CircleWidget extends StatelessWidget {
               ),
             ),
             child: CircleAvatar(
-              // Radius 40, w/h 80
               radius: radius,
               backgroundColor: Colors.grey.shade500,
               child: ClipOval(

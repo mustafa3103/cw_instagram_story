@@ -5,20 +5,19 @@ import 'package:get/get.dart';
 class AnimatedProgressBarWidget extends StatelessWidget {
   // -> Variables
   final RxInt progressIndex;
-  final RxInt videoDuration;
+  final int videoDuration;
   final VoidCallback? onComplete;
 
   const AnimatedProgressBarWidget(
-      {required this.progressIndex,
+      {super.key,
+      required this.progressIndex,
       this.onComplete,
       required this.videoDuration});
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AnimatedProgressBarController>();
-
     controller.progressIndex = progressIndex;
-    controller.duration = videoDuration;
 
     return Obx(() => Row(
           children: List<int>.generate(progressIndex.toInt(), (index) => index)
