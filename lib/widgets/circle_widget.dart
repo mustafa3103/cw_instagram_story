@@ -5,7 +5,7 @@ class CircleWidget extends StatelessWidget {
   final String userProfilePicturePath;
   final double radius, width, height;
 
-  const CircleWidget(
+  CircleWidget(
       {Key? key,
       required this.userName,
       required this.userProfilePicturePath,
@@ -25,7 +25,9 @@ class CircleWidget extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: const Color.fromARGB(255, 183, 183, 183), // Border color
+                // Hikaye gösterildi Color.fromARGB(255, 151, 151, 151)
+                // Hikaye gösterilmedi Color.fromARGB(255, 225, 75, 150)
+                color: const Color.fromARGB(255, 37, 37, 37),
                 width: 2,
               ),
             ),

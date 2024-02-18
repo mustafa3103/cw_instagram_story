@@ -144,35 +144,45 @@ class InstagramStoryPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height - 270,
           width: MediaQuery.of(context).size.width,
           child: GestureDetector(
-              // Gesture detection functions
-              onLongPress: () {
-            progressController.stopProgress();
-            videoPlayerKey.currentState?.pauseVideo();
-          }, onLongPressUp: () {
-            progressController.forwardProgress();
-            videoPlayerKey.currentState?.resumeVideo();
-          }, onTapUp: (details) {
-            double x = details.globalPosition.dx;
+            // Gesture detection functions
+            onLongPress: () {
+              progressController.stopProgress();
+              videoPlayerKey.currentState?.pauseVideo();
+            },
+            onLongPressUp: () {
+              progressController.forwardProgress();
+              videoPlayerKey.currentState?.resumeVideo();
+            },
+            onVerticalDragUpdate: (details) {
+              if (details.primaryDelta != null && details.primaryDelta! > 0) {
+                if (details.primaryDelta! > 20) {
+                  Get.back();
+                }
+              }
+            },
+            onTapUp: (details) {
+              double x = details.globalPosition.dx;
 
-            if (x > MediaQuery.of(context).size.width / 2) {
-              progressController.isIncrementStoryIndex = true.obs;
-              if (storyController.userIndex ==
-                  storyController.users.length - 1) {
-                Get.back();
+              if (x > MediaQuery.of(context).size.width / 2) {
+                progressController.isIncrementStoryIndex = true.obs;
+                if (storyController.userIndex ==
+                    storyController.users.length - 1) {
+                  Get.back();
+                }
+              } else {
+                if (storyController.userIndex == 0) {
+                  progressController.restartProgress();
+                  progressController.forwardProgress();
+                } else if (storyController.userIndex > 0 &&
+                    progressController.storyIndex.value == 0) {
+                  storyController.changeUserIndex(increase: false);
+                  progressController.restartProgress();
+                  progressController.forwardProgress();
+                }
+                progressController.isDecrementStoryIndex = true.obs;
               }
-            } else {
-              if (storyController.userIndex == 0) {
-                progressController.restartProgress();
-                progressController.forwardProgress();
-              } else if (storyController.userIndex > 0 &&
-                  progressController.storyIndex.value == 0) {
-                storyController.changeUserIndex(increase: false);
-                progressController.restartProgress();
-                progressController.forwardProgress();
-              }
-              progressController.isDecrementStoryIndex = true.obs;
-            }
-          }),
+            },
+          ),
         )
       ],
     );
